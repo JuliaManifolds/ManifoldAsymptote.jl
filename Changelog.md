@@ -7,4 +7,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] May 20, 2026
 
-Initial release as a spin-off from [`Manopt.jl`](https://github.com/JuliaManifolds/Manopt.jl).
+Initial release as a spin-off from [`Manopt.jl`](https://github.com/JuliaManifolds/Manopt.jl),
+where the function names and signatures are kept as is.
