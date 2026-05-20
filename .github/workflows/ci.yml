@@ -34,7 +34,6 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.julia-version }}-${{ env.cache-name }}-${{ hashFiles('test/*.jl') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.julia-version }}-${{ env.cache-name }}-
-      - uses: julia-actions/julia-buildpkg@v1
       - uses: julia-actions/julia-runtest@v1
         with:
           prefix: xvfb-run -a   # headless display for any rendering      - uses: julia-actions/julia-processcoverage@v1
@@ -42,5 +41,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           name: codecov-umbrella
+          file: ./lcov.info
           fail_ci_if_error: false
         if: ${{ matrix.os =='ubuntu-latest' }}
