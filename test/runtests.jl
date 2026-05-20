@@ -1,4 +1,4 @@
-using Colors, ColorTypes, FileIO, ManifoldAsymptote, Manifolds, ReferenceTests, Test
+using Colors, ColorTypes, FileIO, LinearAlgebra, ManifoldAsymptote, Manifolds, ReferenceTests, Test
 
 # Generate two temp folders for asy source and img
 isdir("asy") || mkdir("asy") # for exports
@@ -28,10 +28,16 @@ col3 = RGBA{Float64}(0.0, 0.0, 0.8, 0.75)
         @test_reference "ref/s2signals.asy" content1
     end
     @testset "asymptote_export_S2_data" begin
-
+        M2 = Sphere(2)
+        data2 = [[0.0, 0.0, 1.0], [0.0, 1.0, 0.0]]
+        asymptote_export_S2_data("asy/s2signal.asy"; data = data2)
+        @test_reference "ref/s2signal.asy" read("asy/s2signal.asy", String)
     end
     @testset "asymptote_export_SPD" begin
-
+        M3 = SymmetricPositiveDefinite(3)
+        data3 = [Matrix{Float64}(I, 3, 3), [2.0 1.0 0.0; 1.0 2.0 1.0; 0.0 1.0 2.0]]
+        asymptote_export_SPD("asy/spdsignal.asy"; data = data3)
+        @test_reference "ref/spdsignal.asy" read("asy/spdsignal.asy", String)
     end
     @testset "render_asymptote" begin
         render_asymptote("asy/s2signals.asy"; export_file = "img/s2signals")

@@ -1,7 +1,7 @@
 module ManifoldAsymptote
 
 using Colors, ColorSchemes, ColorTypes
-using Manifolds
+using LinearAlgebra, Manifolds
 
 @doc """
     asymptote_export_S2_signals(filename; points, curves, tangent_vectors, colors, kwargs...)
@@ -403,8 +403,7 @@ the default values are given in brackets
 """
 function render_asymptote(
         filename;
-        render::Union{Int, Nothing} = 4,
-        format = "png",
+        render::Union{Int, Nothing} = 4, format = "png",
         export_file = filename[1:([findlast(".", filename)...][1] - 1)]
     )
     if isnothing(render)
