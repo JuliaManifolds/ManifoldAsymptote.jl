@@ -41,6 +41,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           name: codecov-umbrella
-          file: ./lcov.info
+          files: ./lcov.info
           fail_ci_if_error: false
         if: ${{ matrix.os =='ubuntu-latest' }}
