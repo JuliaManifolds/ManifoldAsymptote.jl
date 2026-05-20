@@ -17,7 +17,12 @@ col3 = RGBA{Float64}(0.0, 0.0, 0.8, 0.75)
         asymptote_export_S2_signals(
             "asy/s2signals.asy";
             points = [[p1, q1]], curves = [c1], tangent_vectors = [[(p1, X1)]],
-            colors = Dict(:points => [col1], :curves => [col2], :tvectors => [col3])
+            # check for savety when providing more colors that this is fine
+            colors = Dict(:points => [col1], :curves => [col2, col2], :tvectors => [col3])
+        )
+        # Error when not providing enough colors
+        @test_throws ErrorException asymptote_export_S2_signals(
+            "asy/err.asy"; points = [[p1], [q1]], colors = Dict(:points => [col1])
         )
         content1 = read("asy/s2signals.asy", String)
         @test startswith(content1, "import settings;")
