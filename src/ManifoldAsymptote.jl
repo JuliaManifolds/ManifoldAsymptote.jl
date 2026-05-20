@@ -1,5 +1,8 @@
 module ManifoldAsymptote
 
+using Colors, ColorSchemes, ColorTypes
+using Manifolds
+
 @doc """
     asymptote_export_S2_signals(filename; points, curves, tangent_vectors, colors, kwargs...)
 
@@ -412,5 +415,7 @@ function render_asymptote(
     return run(renderCmd)
 end
 
+export asymptote_export_S2_signals, asymptote_export_S2_data, asymptote_export_SPD
+export render_asymptote
 
 end # module ManifoldAsymptote
