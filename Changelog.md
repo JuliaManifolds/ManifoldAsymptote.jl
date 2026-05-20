@@ -9,3 +9,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Initial release as a spin-off from [`Manopt.jl`](https://github.com/JuliaManifolds/Manopt.jl),
 where the function names and signatures are kept as is.
+This release does fix a bug with `render_asymptote` that sometimes caused the file extension to be added twice.
