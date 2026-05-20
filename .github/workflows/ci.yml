@@ -12,19 +12,35 @@ jobs:
     strategy:
       matrix:
         julia-version: ["lts", "1"]
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        os: [ubuntu-latest,]
     steps:
       - uses: actions/checkout@v6
       - uses: julia-actions/setup-julia@v3
         with:
           version: ${{ matrix.julia-version }}
+      - name: Install Asymptote and dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y asymptote ghostscript
+      - name: Verify asy is available
+        run: asy --version
+      - name: Cache Test References
+        id: cache-references
+        uses: actions/cache@v5
+        env:
+          cache-name: cache-test-references
+        with:
+          path: test/ref
+          key: ${{ runner.os }}-${{ matrix.julia-version }}-${{ env.cache-name }}-${{ hashFiles('test/*.jl') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.julia-version }}-${{ env.cache-name }}-
       - uses: julia-actions/julia-buildpkg@v1
       - uses: julia-actions/julia-runtest@v1
-      - uses: julia-actions/julia-processcoverage@v1
+        with:
+          prefix: xvfb-run -a   # headless display for any rendering      - uses: julia-actions/julia-processcoverage@v1
       - uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./lcov.info
           name: codecov-umbrella
           fail_ci_if_error: false
         if: ${{ matrix.os =='ubuntu-latest' }}

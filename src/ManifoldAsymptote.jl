@@ -1,7 +1,7 @@
 module ManifoldAsymptote
 
 using Colors, ColorSchemes, ColorTypes
-using Manifolds
+using LinearAlgebra, Manifolds
 
 @doc """
     asymptote_export_S2_signals(filename; points, curves, tangent_vectors, colors, kwargs...)
@@ -399,18 +399,17 @@ the default values are given in brackets
    This can be removed from the command by setting it to `nothing`.
 * `format="png"`:
   final rendered format passed to the `-f` option
-* `export_file`: (the filename with format as ending) specify the export filename
+* `export_folder`: (the filename with format as ending) specify the export filename
 """
 function render_asymptote(
         filename;
-        render::Union{Int, Nothing} = 4,
-        format = "png",
-        export_folder = string(filename[1:([findlast(".", filename)...][1])], format),
+        render::Union{Int, Nothing} = 4, format = "png",
+        export_file = filename[1:([findlast(".", filename)...][1] - 1)]
     )
     if isnothing(render)
-        renderCmd = `asy -f $(format) -globalwrite  -o "$(relpath(export_folder))" $(filename)`
+        renderCmd = `asy -f $(format) -globalwrite  -o "$(relpath(export_file))" $(filename)`
     else
-        renderCmd = `asy -render $(render) -f $(format) -globalwrite  -o "$(relpath(export_folder))" $(filename)`
+        renderCmd = `asy -render $(render) -f $(format) -globalwrite  -o "$(relpath(export_file))" $(filename)`
     end
     return run(renderCmd)
 end

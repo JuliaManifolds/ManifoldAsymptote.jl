@@ -1,3 +1,6 @@
 docs/build
 docs/src/changelog.md
 Manifest.toml
+test/asy
+test/img
+test/ref
